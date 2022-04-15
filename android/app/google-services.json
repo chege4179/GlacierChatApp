@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "587687438466",
+    "project_id": "glacierchat-ecaee",
+    "storage_bucket": "glacierchat-ecaee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587687438466:android:5edde6c160c96cc51bec9b",
+        "android_client_info": {
+          "package_name": "com.glacierchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587687438466-bbu25rasihusvo2n5dbmba4b7ijmgfut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPpayes7jv9RFv_7oX9JbMSiplHVKEjjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587687438466-bbu25rasihusvo2n5dbmba4b7ijmgfut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
