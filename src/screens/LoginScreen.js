@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
 import { WEB_CLIENT_ID } from "../util/config";
 import auth from "@react-native-firebase/auth";
-import { Box, Button } from "native-base";
+import { Box, Button, Text, VStack } from "native-base";
 
 
 GoogleSignin.configure({
@@ -29,17 +29,38 @@ const LoginScreen = () => {
      }
 
      return (
-          <Box width="100%" height="100%" display="flex" p={4} justifyContent="center" alignItems="center">
+          <Box
+               width="100%"
+               height="100%"
+               display="flex"
+               p={4}
+               justifyContent="center"
+               alignItems="center"
+          >
+               <VStack
+                    width="100%"
+                    height="25%"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+               >
+                    <Text
+                         fontSize={22}
+                         fontWeight="bold"
+                         color="black"
+                    >Welcome to Glacier Chat App
+                    </Text>
+                    <GoogleSigninButton
+                         style={{ width: 192, height: 48 }}
+                         size={GoogleSigninButton.Size.Wide}
+                         color={GoogleSigninButton.Color.Dark}
+                         onPress={() => onGoogleButtonPress()
+                         .then(() => console.log("Signed in with Google!"))
+                         .catch((err) => console.log("Try error", err))}
+                         disabled={false}
+                    />
+               </VStack>
 
-               <GoogleSigninButton
-                    style={{ width: 192, height: 48 }}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Dark}
-                    onPress={() => onGoogleButtonPress()
-                    .then(() => console.log("Signed in with Google!"))
-                    .catch((err) => console.log("Try error", err))}
-                    disabled={false}
-               />
           </Box>
      );
 };

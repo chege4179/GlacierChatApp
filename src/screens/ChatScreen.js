@@ -67,8 +67,13 @@ const ChatScreen = ({ route }) => {
      }
 
      useEffect(() => {
-          getChats();
-
+          let isSubscribed = true
+          if (isSubscribed){
+               getChats();
+          }
+          return () => {
+               isSubscribed = false
+          }
      }, []);
 
      const onSend = async (message) => {

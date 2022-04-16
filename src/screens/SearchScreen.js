@@ -9,13 +9,19 @@ const SearchScreen = () => {
      const [searchresults, setSearchResults] = useState([]);
      const user = auth().currentUser
      useEffect(() => {
-          firestore()
-          .collection("Users")
-          .get()
-          .then((snapshot) => {
-               const users = snapshot.docs.map((doc) => (doc.data()));
-               setUsers(users);
-          });
+          let isSubscribed = true
+          if (isSubscribed){
+               firestore()
+               .collection("Users")
+               .get()
+               .then((snapshot) => {
+                    const users = snapshot.docs.map((doc) => (doc.data()));
+                    setUsers(users);
+               });
+          }
+          return () => {
+               isSubscribed = false
+          }
      }, []);
      const SearchUser = (text) => {
           setSearchResults(users.filter((user) => user.displayName.toLowerCase().includes(text.toLowerCase())))
@@ -33,7 +39,6 @@ const SearchScreen = () => {
                               return (<UserSearchCard key={index} user={user} />);
                          })
                     }
-
                </VStack>
           </Box>
      );

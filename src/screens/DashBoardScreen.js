@@ -20,9 +20,10 @@ const DashBoardScreen = () => {
      },[])
 
      useEffect(() => {
+          let isSubscribed = true
           const subscriber = auth().onAuthStateChanged((user) => {
-
-               firestore()
+               if (isSubscribed){
+                    firestore()
                     .collection("Users")
                     .get()
                     .then((snapshot) => {
@@ -34,8 +35,11 @@ const DashBoardScreen = () => {
                               }
                          }
                     });
+               }
           });
-          return subscriber; // unsubscribe on unmount
+          return () => {
+               isSubscribed = false
+          }
      }, []);
 
      function addUserToDatabase(user) {

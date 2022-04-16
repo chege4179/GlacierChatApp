@@ -52,15 +52,22 @@ const App = () => {
      const [initializing, setInitializing] = useState(true);
      const [user, setUser] = useState();
 
-     // Handle user state changes
+
      function onAuthStateChanged(user) {
-          setUser(user);
-          if (initializing) setInitializing(false);
+
      }
 
      useEffect(() => {
-          const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-          return subscriber; // unsubscribe on unmount
+          let isSubscribed = true
+          const subscriber = auth().onAuthStateChanged(( user) => {
+               if (isSubscribed){
+                    setUser(user);
+                    if (initializing) setInitializing(false);
+               }
+          });
+          return () => {
+               isSubscribed = false
+          }// unsubscribe on unmount
      }, []);
      return (
           <NativeBaseProvider theme={theme}>
