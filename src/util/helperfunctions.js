@@ -64,22 +64,22 @@ async function createNewChat(sender,receiver,message,docId){
                receiver:receiver,
 
           })
-          .then(() => {
-               console.log("New Chat created");
-          })
-          .catch((err) => {
-               console.log("An error occurred while creating a new chat",err);
+               .then(() => {
+                    console.log("New Chat created");
+               })
+               .catch((err) => {
+                    console.log("An error occurred while creating a new chat",err);
 
-          })
+               })
           const chatId = await getChatId(sender,receiver,docId)
           sendMessageToExistingChat(sender,receiver,message,docId,chatId)
-          .then(() => {
-               console.log("New message sent to the existing chat");
-          })
-          .catch((err) => {
-               console.log("An error occurred sending message to the existing chat",err);
+               .then(() => {
+                    console.log("New message sent to the existing chat");
+               })
+               .catch((err) => {
+                    console.log("An error occurred sending message to the existing chat",err);
 
-          })
+               })
      }catch (e){
           console.log("Error creating a new chat",e);
      }
@@ -106,10 +106,12 @@ async function sendMessageToExistingChat(sender,receiver,message,docId,chatId){
      }catch (e){
           console.log("Error sending message to an existing chat",e);
      }
-
-
 }
-export { getDocId,checkIfChatsExists,createNewChat,sendMessageToExistingChat,getChats,getChatId ,getUserInfo }
+
+function truncate(str, n) {
+     return str?.length > n ? str.substr(0, n - 1) + "...." : str;
+}
+export { getDocId,checkIfChatsExists,createNewChat,sendMessageToExistingChat,getChats,getChatId ,getUserInfo,truncate }
 /**
  * {
  *      ...user,

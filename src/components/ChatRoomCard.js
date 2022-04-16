@@ -30,8 +30,6 @@ const ChatRoomCard = ({ email }) => {
                <Box
                     width="100%"
                     height={16}
-                    borderWidth={1}
-                    borderColor="black"
                     display="flex"
                     justifyContent="center"
                     px={4}

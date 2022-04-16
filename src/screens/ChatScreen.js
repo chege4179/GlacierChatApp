@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Box, HStack, KeyboardAvoidingView } from "native-base";
+import { Avatar, Box, HStack, KeyboardAvoidingView, Text } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
@@ -12,7 +12,7 @@ import {
      createNewChat,
      getChatId,
      getDocId,
-     sendMessageToExistingChat,
+     sendMessageToExistingChat, truncate,
 } from "../util/helperfunctions";
 
 const ChatScreen = ({ route }) => {
@@ -24,7 +24,14 @@ const ChatScreen = ({ route }) => {
 
      useLayoutEffect(() => {
           navigation.setOptions({
-               headerTitle: user.displayName || "Glacier Chat User",
+               headerTitle: () => {
+                    return(
+                         <HStack width="100%" space={2} justifyContent="flex-start" height="100%">
+                              <Avatar bg="cyan.500" alignSelf="center" size="sm" source={{ uri: user.photoURL }}/>
+                              <Text color="black" fontSize={22} fontWeight="bold">{truncate(user.displayName,14)}</Text>
+                         </HStack>
+                    )
+               },
                headerRight: () => {
                     return (
                          <HStack>
@@ -54,7 +61,7 @@ const ChatScreen = ({ route }) => {
                .onSnapshot((snapshot) => {
                     const messages = snapshot.docs.map((doc) => ({ _id:doc.id,...JSON.parse(doc.data().message) }));
                     console.warn("Incoming messages",messages);
-                    setMessages(messages);
+                    setMessages(messages.sort((a, b) => b.time - a.time));
                });
           }
      }
@@ -73,15 +80,15 @@ const ChatScreen = ({ route }) => {
 
           if (status) {
                const chatId = await getChatId(currentUser.email, user.email, docId);
-               await sendMessageToExistingChat(currentUser.email, user.email, JSON.stringify(message[0]), docId, chatId);
+               await sendMessageToExistingChat(currentUser.email, user.email, JSON.stringify({ time:Date.now(),...message[0] }), docId, chatId);
           } else {
-               await createNewChat(currentUser.email, user.email, JSON.stringify(message[0]), docId);
+               await createNewChat(currentUser.email, user.email, JSON.stringify({ time:Date.now(),...message[0] }), docId);
           }
           if (status2) {
-               const chatId2 = await getChatId(currentUser.email, user.email, docId2);
-               await sendMessageToExistingChat(currentUser.email, user.email, JSON.stringify(message[0]), docId2, chatId2);
+               const chatId2 = await getChatId(user.email, currentUser.email, docId2);
+               await sendMessageToExistingChat(user.email, currentUser.email, JSON.stringify({ time:Date.now(),...message[0] }), docId2, chatId2);
           } else {
-               await createNewChat(currentUser.email, user.email, JSON.stringify(message[0]), docId2);
+               await createNewChat(user.email, currentUser.email, JSON.stringify({ time:Date.now(),...message[0] }), docId2);
           }
      };
      return (
@@ -95,6 +102,8 @@ const ChatScreen = ({ route }) => {
                               name: currentUser.displayName,
                               avatar: currentUser.photoURL,
                          }}
+                         alignTop={true}
+                         inverted={false}
                     />
                </Box>
           </KeyboardAvoidingView>

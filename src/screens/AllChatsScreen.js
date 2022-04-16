@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Text, VStack } from "native-base";
+import { Box, Text, VStack,FlatList } from "native-base";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
 import { getDocId } from "../util/helperfunctions";
@@ -14,11 +14,8 @@ const AllChatsScreen = () => {
                     .collection("Users")
                     .doc(docId)
                     .collection("Chats")
-                    .get()
-                    .then((receiverDocs) =>{
+                    .onSnapshot((receiverDocs) => {
                          const receivers = receiverDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
-                         console.warn("Receivers",receivers);
-
                          setReceiverEmails(receivers)
                     })
 
@@ -28,13 +25,15 @@ const AllChatsScreen = () => {
 
      return (
           <VStack width="100%"height="100%">
-               {
-                    receiverEmails.map((receiver) => {
+               <FlatList
+                    data={receiverEmails}
+                    keyExtractor={({ index }) => index }
+                    renderItem={({ item }) => {
                          return(
-                              <ChatRoomCard email={receiver.receiver} />
+                              <ChatRoomCard key={item.id} email={item.receiver} />
                          )
-                    })
-               }
+                    }}
+               />
           </VStack>
      );
 };

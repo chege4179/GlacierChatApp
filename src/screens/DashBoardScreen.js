@@ -60,9 +60,9 @@ const DashBoardScreen = () => {
      return (
           <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center">
                <VStack width="100%" height="100%" >
-                    <HStack space={4} width="100%" height={16} bg="primary.900"  justifyContent="space-between" px={4} alignItems="center">
+                    <HStack space={4} width="100%" height="8%" bg="primary.900"  justifyContent="space-between" px={4} alignItems="center">
                          <TouchableOpacity onPress={GoToProfilePage}>
-                              <Avatar bg="cyan.500" alignSelf="center" size="md" source={{ uri: user?.photoURL }}/>
+                              <Avatar bg="cyan.500" alignSelf="center" size="sm" source={{ uri: user?.photoURL }}/>
                          </TouchableOpacity>
                          <Text color="black" fontSize={26} fontWeight="bold">My Chats</Text>
                          <TouchableOpacity onPress={GoToSearchScreen}>
