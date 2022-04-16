@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Avatar, Box, HStack, Text, VStack } from "native-base";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Screens from "../util/Screens";
 import AllChatsScreen from "./AllChatsScreen";
+
 
 const DashBoardScreen = () => {
      const navigation = useNavigation()
@@ -73,7 +74,10 @@ const DashBoardScreen = () => {
                               <FontAwesome name="search" size={30 } color="black"/>
                          </TouchableOpacity>
                     </HStack>
-                    <AllChatsScreen/>
+                    <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center" px={1}>
+                         <AllChatsScreen/>
+                    </Box>
+
                </VStack>
 
           </Box>

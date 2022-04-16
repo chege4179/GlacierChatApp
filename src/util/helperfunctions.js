@@ -112,16 +112,3 @@ function truncate(str, n) {
      return str?.length > n ? str.substr(0, n - 1) + "...." : str;
 }
 export { getDocId,checkIfChatsExists,createNewChat,sendMessageToExistingChat,getChats,getChatId ,getUserInfo,truncate }
-/**
- * {
- *      ...user,
- *      chats:[
- *           sender:email,
- *           receiver:email,
- *           messages:[
- *                { ...message }
- *           ]
- *      ]
- * }
- *
- */

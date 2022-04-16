@@ -16,7 +16,6 @@ const ProfileScreen = () => {
                     console.log("Sign Out error", err);
                });
           })
-
      };
      return (
           <Box width="100%" height="100%" display="flex"  alignItems="center" p={4} justifyContent="space-between">
@@ -25,9 +24,8 @@ const ProfileScreen = () => {
                     <Text color="black" fontSize={30} fontWeight="bold">{currentUser.displayName}</Text>
                     <Text color="black" fontSize={17} >{currentUser.email}</Text>
                </VStack>
-
                <Button width="90%" height={12} bg="primary.900" borderRadius="xl" onPress={LogOut}>
-                    Log Out
+                    <Text fontSize={18} fontWeight="bold">Log Out</Text>
                </Button>
           </Box>
      );

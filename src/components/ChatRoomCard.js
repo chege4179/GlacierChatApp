@@ -33,7 +33,9 @@ const ChatRoomCard = ({ email }) => {
                     display="flex"
                     justifyContent="center"
                     px={4}
-                    my={1}
+                    bg="muted.300"
+                    rounded="lg"
+                    mb={2}
                >
                     <HStack justifyContent="space-evenly">
                          <Avatar bg="cyan.500" alignSelf="center" size="md" source={{ uri: receiver.photoURL }}/>

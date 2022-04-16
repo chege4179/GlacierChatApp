@@ -26,11 +26,16 @@ const AllChatsScreen = () => {
      return (
           <VStack width="100%"height="100%">
                <FlatList
+                    py={2}
+                    width="100%"
                     data={receiverEmails}
-                    keyExtractor={({ index }) => index }
+                    keyExtractor={(item) => item.id}
                     renderItem={({ item }) => {
                          return(
-                              <ChatRoomCard key={item.id} email={item.receiver} />
+                              <>
+                                   <ChatRoomCard key={item.id} email={item.receiver} />
+                              </>
+
                          )
                     }}
                />

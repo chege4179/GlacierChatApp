@@ -9,7 +9,7 @@
 import React, { useEffect, useState } from "react";
 
 
-import { Box, extendTheme, Text } from "native-base";
+import {  extendTheme} from "native-base";
 import { NativeBaseProvider } from "native-base/src/core/NativeBaseProvider";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Input, Text, VStack } from "native-base";
+import { Box, Input,  VStack,FlatList } from "native-base";
 import firestore from "@react-native-firebase/firestore";
 import UserSearchCard from "../components/UserSearchCard";
 import auth from "@react-native-firebase/auth";
@@ -31,14 +31,17 @@ const SearchScreen = () => {
      };
      return (
           <Box width="100%" height="100%" p={2} display="flex" justifyContent="center" alignItems="center">
-               <VStack width="100%" height="100%" display="flex" alignItems="center">
+               <VStack width="100%" height="100%" display="flex" alignItems="center" justifyContent="center">
                     <Input size="2xl" placeholder="Search Users...." onChangeText={SearchUser} />
-                    {
-                         searchresults.filter((usere) =>usere.email !== user.email ).map((user, index) => {
-
-                              return (<UserSearchCard key={index} user={user} />);
-                         })
-                    }
+                    <FlatList
+                         py={2}
+                         width="100%"
+                         data={searchresults.filter((usere) =>usere.email !== user.email )}
+                         keyExtractor={(item, index) => index}
+                         renderItem={({ item }) => {
+                              return (<UserSearchCard user={item} />)
+                         }}
+                    />
                </VStack>
           </Box>
      );

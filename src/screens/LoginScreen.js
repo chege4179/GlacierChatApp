@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
 import { WEB_CLIENT_ID } from "../util/config";
 import auth from "@react-native-firebase/auth";
-import { Box, Button, Text, VStack } from "native-base";
+import { Box,Text, VStack } from "native-base";
 
 
 GoogleSignin.configure({
