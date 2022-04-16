@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Screens from "../util/Screens";
+import AllChatsScreen from "./AllChatsScreen";
 
 const DashBoardScreen = () => {
      const navigation = useNavigation()
@@ -68,7 +69,9 @@ const DashBoardScreen = () => {
                               <FontAwesome name="search" size={30 } color="black"/>
                          </TouchableOpacity>
                     </HStack>
+                    <AllChatsScreen/>
                </VStack>
+
           </Box>
      );
 };

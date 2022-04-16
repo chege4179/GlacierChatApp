@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Box, Input, Text, VStack } from "native-base";
 import firestore from "@react-native-firebase/firestore";
 import UserSearchCard from "../components/UserSearchCard";
+import auth from "@react-native-firebase/auth";
 
 const SearchScreen = () => {
      const [users, setUsers] = useState([]);
      const [searchresults, setSearchResults] = useState([]);
+     const user = auth().currentUser
      useEffect(() => {
           firestore()
           .collection("Users")
@@ -26,8 +28,8 @@ const SearchScreen = () => {
                <VStack width="100%" height="100%" display="flex" alignItems="center">
                     <Input size="2xl" placeholder="Search Users...." onChangeText={SearchUser} />
                     {
-                         searchresults.map((user, index) => {
-                              console.log("user", index, user);
+                         searchresults.filter((usere) =>usere.email !== user.email ).map((user, index) => {
+
                               return (<UserSearchCard key={index} user={user} />);
                          })
                     }
