@@ -107,8 +107,22 @@ async function sendMessageToExistingChat(sender,receiver,message,docId,chatId){
           console.log("Error sending message to an existing chat",e);
      }
 }
+async function getLastMessage(loggedInUser,receiver){
+     try {
+          const docId = await getDocId(loggedInUser)
+          const chatId = await getChatId(loggedInUser,receiver,docId)
+          const chatsDocs = await firestore().collection("Users").doc(docId).collection("Chats").doc(chatId).collection("messages").get()
+          const unorderedchats = chatsDocs.docs.map((doc) => ({ _id: doc.id, ...JSON.parse(doc.data().message) }))
+          const orderChats = unorderedchats.sort((a, b) => b.time - a.time)
+          return orderChats[orderChats.length - 1]
+     }catch (e){
+          console.log("Error in catch block",e);
 
+     }
+
+
+}
 function truncate(str, n) {
      return str?.length > n ? str.substr(0, n - 1) + "...." : str;
 }
-export { getDocId,checkIfChatsExists,createNewChat,sendMessageToExistingChat,getChats,getChatId ,getUserInfo,truncate }
+export { getDocId,checkIfChatsExists,createNewChat,sendMessageToExistingChat,getChats,getChatId ,getUserInfo,truncate,getLastMessage }

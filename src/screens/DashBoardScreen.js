@@ -1,5 +1,5 @@
-import React, { useEffect, useLayoutEffect } from "react";
-import { Avatar, Box, HStack, Text, VStack } from "native-base";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Alert, Avatar, Box, HStack, Slide, Text, VStack } from "native-base";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
@@ -7,12 +7,14 @@ import { TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Screens from "../util/Screens";
 import AllChatsScreen from "./AllChatsScreen";
+import NetInfo from "@react-native-community/netinfo";
 
 
 const DashBoardScreen = () => {
      const navigation = useNavigation()
      const user = auth().currentUser
-     console.log("User",user);
+
+
 
      useLayoutEffect(() => {
           navigation.setOptions({
@@ -43,6 +45,20 @@ const DashBoardScreen = () => {
           }
      }, []);
 
+     const [IsConnected,setIsConnected] = useState(false)
+
+     useEffect(() => {
+          NetInfo.addEventListener(state => {
+               setIsConnected(state.isConnected)
+               // console.log("Connection type", state.type);
+               // console.log("Is connected?", state.isConnected);
+          });
+          return () => {
+               setIsConnected(false)
+
+          }
+     },[])
+
      function addUserToDatabase(user) {
           firestore()
           .collection("Users")
@@ -64,6 +80,14 @@ const DashBoardScreen = () => {
      }
      return (
           <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center">
+               <Slide in={!IsConnected} placement="top">
+                    <Alert justifyContent="center" status="error">
+                         <Alert.Icon />
+                         <Text color="error.600" fontWeight="medium">
+                              {IsConnected ? "Internet Connection found" : "No Internet Connection"}
+                         </Text>
+                    </Alert>
+               </Slide>
                <VStack width="100%" height="100%" >
                     <HStack space={4} width="100%" height="8%" bg="primary.900"  justifyContent="space-between" px={4} alignItems="center">
                          <TouchableOpacity onPress={GoToProfilePage}>

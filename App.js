@@ -52,11 +52,6 @@ const App = () => {
      const [initializing, setInitializing] = useState(true);
      const [user, setUser] = useState();
 
-
-     function onAuthStateChanged(user) {
-
-     }
-
      useEffect(() => {
           let isSubscribed = true
           const subscriber = auth().onAuthStateChanged(( user) => {

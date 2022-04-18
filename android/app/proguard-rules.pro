@@ -8,3 +8,8 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+
+# react-native-firebase section
+-keep class io.invertase.firebase.** { *; }
+-dontwarn io.invertase.firebase.**
+# end react-native-firebase section
