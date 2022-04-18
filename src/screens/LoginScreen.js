@@ -3,6 +3,8 @@ import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/go
 import { WEB_CLIENT_ID } from "../util/config";
 import auth from "@react-native-firebase/auth";
 import { Box,Text, VStack } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import Screens from "../util/Screens";
 
 
 GoogleSignin.configure({
@@ -11,6 +13,7 @@ GoogleSignin.configure({
 });
 
 const LoginScreen = () => {
+     const navigation = useNavigation()
      async function onGoogleButtonPress() {
           try {
                // Get the users ID token
@@ -55,7 +58,7 @@ const LoginScreen = () => {
                          size={GoogleSigninButton.Size.Wide}
                          color={GoogleSigninButton.Color.Dark}
                          onPress={() => onGoogleButtonPress()
-                         .then(() => console.log("Signed in with Google!"))
+                         .then(() => navigation.navigate(Screens.DASHBOARD_SCREEN))
                          .catch((err) => console.log("Try error", err))}
                          disabled={false}
                     />

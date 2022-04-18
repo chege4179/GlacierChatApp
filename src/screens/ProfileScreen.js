@@ -2,15 +2,18 @@ import React from "react";
 import { Avatar, Box, Button, Text, VStack } from "native-base";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import Screens from "../util/Screens";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileScreen = () => {
+     const navigation = useNavigation()
      const currentUser = auth().currentUser
      const LogOut = () => {
           GoogleSignin.signOut().then(() => {
                auth()
                .signOut()
                .then(() => {
-                    console.log("Sign Out successful");
+                    navigation.navigate(Screens.LOGIN_SCREEN)
                })
                .catch((err) => {
                     console.log("Sign Out error", err);

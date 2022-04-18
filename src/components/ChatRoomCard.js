@@ -9,7 +9,7 @@ import auth from "@react-native-firebase/auth";
 
 const ChatRoomCard = ({ email }) => {
      const currentUser = auth().currentUser
-     console.log("Current User UID",currentUser.uid);
+
      const [receiver,setReceiver] = useState({})
      const [lastMessage,setLastMessage] = useState({})
      async function getUserData(){
@@ -19,18 +19,22 @@ const ChatRoomCard = ({ email }) => {
      useEffect(() => {
           getUserData()
           .then(() => {
-               getLastMessage(currentUser.email,email)
-               .then((lastMessage) => {
+               if(currentUser !== null){
+                    getLastMessage(currentUser.email,email)
+                    .then((lastMessage) => {
 
-                    console.log("Last Message",lastMessage);
-                    setLastMessage(lastMessage)
-               })
-               .catch((e) => {
-                    console.log("Error here",e);
-               })
+                         console.log("Last Message",lastMessage);
+                         setLastMessage(lastMessage)
+                    })
+                    .catch((e) => {
+                         console.log("Error here",e);
+                    })
+               }
+
 
           })
           .catch((err) => {
+               console.log(err);
 
           })
      },[])
@@ -55,7 +59,7 @@ const ChatRoomCard = ({ email }) => {
                          <VStack width="90%" ml={4} pl={2}>
                               <Text color="black" fontSize={17} fontWeight="bold">{receiver.displayName}</Text>
                               <HStack width="100%" height="50%" justifyContent="space-evenly" alignItems="center">
-                                   <Text color="black">{ currentUser.uid === lastMessage?.user?._id ? "Me :" : lastMessage?.user?.name }</Text>
+                                   <Text color="black">{ currentUser.uid === lastMessage?.user?._id ? "Me :" : truncate(lastMessage?.user?.name,15)  + ":" }</Text>
                                    <Box width="40%">
                                         <Text color="black" textAlign="left">{truncate(lastMessage.text,20)}</Text>
                                    </Box>

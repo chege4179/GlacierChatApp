@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
-import { Actionsheet, Avatar, Box, HStack, KeyboardAvoidingView, Text, useDisclose } from "native-base";
+import { Actionsheet, Alert, Avatar, Box, HStack, KeyboardAvoidingView, Slide, Text, useDisclose } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
@@ -15,17 +15,14 @@ import {
      sendMessageToExistingChat, truncate,
 } from "../util/helperfunctions";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import NetInfo from "@react-native-community/netinfo";
 
 const ChatScreen = ({ route }) => {
      const currentUser = auth().currentUser;
      const navigation = useNavigation();
      const { user } = route.params;
      const [messages, setMessages] = useState();
-     const {
-          isOpen,
-          onOpen,
-          onClose,
-     } = useDisclose();
+     const { isOpen, onOpen, onClose } = useDisclose();
 
      useLayoutEffect(() => {
           navigation.setOptions({
@@ -81,7 +78,7 @@ const ChatScreen = ({ route }) => {
                getChats()
                .then(() => {
 
-               })
+                    })
                .catch((err) => {
                     console.log(err);
 
@@ -92,6 +89,20 @@ const ChatScreen = ({ route }) => {
                isSubscribed = false;
           };
      }, []);
+
+     const [IsConnected,setIsConnected] = useState(false)
+
+     useEffect(() => {
+          NetInfo.addEventListener(state => {
+               setIsConnected(state.isConnected)
+               // console.log("Connection type", state.type);
+               // console.log("Is connected?", state.isConnected);
+          });
+          return () => {
+               setIsConnected(false)
+
+          }
+     },[])
 
      const onSend = async (message) => {
           console.log("Sent message >>>>>>>>>>>>>>>>>>>", message);
@@ -117,6 +128,14 @@ const ChatScreen = ({ route }) => {
      };
      return (
           <KeyboardAvoidingView>
+               <Slide in={!IsConnected} placement="top">
+                    <Alert justifyContent="center" status="error">
+                         <Alert.Icon />
+                         <Text color="error.600" fontWeight="medium">
+                              {IsConnected ? "Internet Connection found" : "No Internet Connection"}
+                         </Text>
+                    </Alert>
+               </Slide>
                <Box width="100%" height="100%">
                     <Actionsheet isOpen={isOpen} onClose={onClose}>
                          <Actionsheet.Content>
@@ -143,16 +162,16 @@ const ChatScreen = ({ route }) => {
                               avatar: currentUser.photoURL,
                          }}
                          alignTop={true}
-                         inverted={false}
+                         inverted={true}
                          showAvatarForEveryMessage={false}
                          showUserAvatar={false}
-                         renderChatEmpty={() => {
-                              return(
-                                   <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center" borderColor="black" borderWidth={2}>
-                                        <Text color="black" textAlign="center">You have messages with this Person ..Be the first to start a chat </Text>
-                                   </Box>
-                              )
-                         }}
+                         // renderChatEmpty={() => {
+                         //      return(
+                         //           <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center" borderColor="black" borderWidth={2}>
+                         //                <Text color="black" textAlign="center">You have messages with this Person ..Be the first to start a chat </Text>
+                         //           </Box>
+                         //      )
+                         // }}
 
                     />
                </Box>

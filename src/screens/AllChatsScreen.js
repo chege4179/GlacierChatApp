@@ -5,31 +5,59 @@ import auth from "@react-native-firebase/auth";
 import { getDocId } from "../util/helperfunctions";
 import ChatRoomCard from "../components/ChatRoomCard";
 import NetInfo from "@react-native-community/netinfo"
+import { useNavigation } from "@react-navigation/native";
 
 const AllChatsScreen = () => {
+     const navigation  = useNavigation()
      const currentUser = auth().currentUser
      const [receiverEmails,setReceiverEmails] = useState([])
      const [isLoading,setIsLoading] = useState(false)
 
-     useEffect(() => {
+
+     navigation.addListener("focus",() => {
           setIsLoading(true)
-          getDocId(currentUser.email)
+          if (currentUser !== null){
+               getDocId(currentUser.email)
                .then((docId)=>{
                     firestore()
-                         .collection("Users")
-                         .doc(docId)
-                         .collection("Chats")
-                         .onSnapshot((receiverDocs) => {
-                              const receivers = receiverDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
-                              setIsLoading(false)
-                              setReceiverEmails(receivers)
-                         })
+                    .collection("Users")
+                    .doc(docId)
+                    .collection("Chats")
+                    .onSnapshot((receiverDocs) => {
+                         const receivers = receiverDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
+                         setIsLoading(false)
+                         setReceiverEmails(receivers)
+                    })
                })
                .catch((err)=>{
                     setIsLoading(false)
                     console.log(err);
                     console.log("error");
                })
+          }
+     })
+     useEffect(() => {
+          setIsLoading(true)
+          if (currentUser !== null){
+               getDocId(currentUser.email)
+               .then((docId)=>{
+                    firestore()
+                    .collection("Users")
+                    .doc(docId)
+                    .collection("Chats")
+                    .onSnapshot((receiverDocs) => {
+                         const receivers = receiverDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
+                         setIsLoading(false)
+                         setReceiverEmails(receivers)
+                    })
+               })
+               .catch((err)=>{
+                    setIsLoading(false)
+                    console.log(err);
+                    console.log("error");
+               })
+          }
+
      }, []);
 
      return (
