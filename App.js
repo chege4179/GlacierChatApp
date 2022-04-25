@@ -62,9 +62,10 @@ const App = () => {
           };
      }, []);
      return (
-          <NativeBaseProvider theme={theme}>
-               <NavigationContainer>
-                    <Stack.Navigator initialRouteName={currentUser === null ? Screens.LOGIN_SCREEN : Screens.DASHBOARD_SCREEN}>
+          <NavigationContainer>
+               <NativeBaseProvider theme={theme}>
+                    <Stack.Navigator
+                         initialRouteName={currentUser === null ? Screens.LOGIN_SCREEN : Screens.DASHBOARD_SCREEN}>
                          <Stack.Screen name={Screens.LOGIN_SCREEN} component={LoginScreen} options={{
                               headerShown: false,
                          }} />
@@ -82,8 +83,8 @@ const App = () => {
                               headerShown: false,
                          }} />
                     </Stack.Navigator>
-               </NavigationContainer>
-          </NativeBaseProvider>
+               </NativeBaseProvider>
+          </NavigationContainer>
 
      );
 };

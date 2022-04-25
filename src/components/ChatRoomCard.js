@@ -59,7 +59,7 @@ const ChatRoomCard = ({ email }) => {
                          <VStack width="90%" ml={4} pl={2}>
                               <Text color="black" fontSize={17} fontWeight="bold">{receiver.displayName}</Text>
                               <HStack width="100%" height="50%" justifyContent="space-evenly" alignItems="center">
-                                   <Text color="black">{ currentUser.uid === lastMessage?.user?._id ? "Me :" : truncate(lastMessage?.user?.name,15)  + ":" }</Text>
+                                   <Text color="black">{ currentUser?.uid === lastMessage?.user?._id ? "Me :" : truncate(lastMessage?.user?.name,15)  + ":" }</Text>
                                    <Box width="40%">
                                         <Text color="black" textAlign="left">{truncate(lastMessage.text,20)}</Text>
                                    </Box>

@@ -1,6 +1,6 @@
 import React from "react";
 import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
-import { WEB_CLIENT_ID } from "../util/config";
+import { WEB_CLIENT_ID, WEB_CLIENT_ID_2 } from "../util/config";
 import auth from "@react-native-firebase/auth";
 import { Box,Text, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
@@ -9,7 +9,6 @@ import Screens from "../util/Screens";
 
 GoogleSignin.configure({
      webClientId: WEB_CLIENT_ID,
-
 });
 
 const LoginScreen = () => {

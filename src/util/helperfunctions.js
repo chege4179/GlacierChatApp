@@ -125,4 +125,8 @@ async function getLastMessage(loggedInUser,receiver){
 function truncate(str, n) {
      return str?.length > n ? str.substr(0, n - 1) + "...." : str;
 }
-export { getDocId,checkIfChatsExists,createNewChat,sendMessageToExistingChat,getChats,getChatId ,getUserInfo,truncate,getLastMessage }
+export { getDocId,checkIfChatsExists,createNewChat,
+     sendMessageToExistingChat,getChats,getChatId ,
+     getUserInfo,truncate,getLastMessage
+
+}

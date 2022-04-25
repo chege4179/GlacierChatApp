@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { BackHandler, TouchableOpacity } from "react-native";
 import { Actionsheet, Alert, Avatar, Box, HStack, KeyboardAvoidingView, Slide, Text, useDisclose } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
@@ -14,8 +14,9 @@ import {
      getDocId,
      sendMessageToExistingChat, truncate,
 } from "../util/helperfunctions";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
 import NetInfo from "@react-native-community/netinfo";
+import Screens from "../util/Screens";
 
 const ChatScreen = ({ route }) => {
      const currentUser = auth().currentUser;
@@ -51,6 +52,16 @@ const ChatScreen = ({ route }) => {
                     );
                },
           });
+     }, []);
+     useEffect(() => {
+          BackHandler.addEventListener("hardwareBackPress",() => {
+               navigation.goBack()
+          })
+          return () => {
+               BackHandler.removeEventListener("hardwareBackPress",() => {
+
+               })
+          }
      }, []);
 
      async function getChats() {
@@ -103,6 +114,11 @@ const ChatScreen = ({ route }) => {
 
           }
      },[])
+
+     BackHandler.addEventListener("hardwareBackPress",() => {
+          console.warn("Pressed");
+          navigation.navigate(Screens.DASHBOARD_SCREEN)
+     });
 
      const onSend = async (message) => {
           console.log("Sent message >>>>>>>>>>>>>>>>>>>", message);

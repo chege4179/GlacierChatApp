@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, Box, Button, Text, VStack } from "native-base";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import Screens from "../util/Screens";
 import { useNavigation } from "@react-navigation/native";
+import { BackHandler } from "react-native";
 
 const ProfileScreen = () => {
      const navigation = useNavigation()
@@ -20,6 +21,17 @@ const ProfileScreen = () => {
                });
           })
      };
+     useEffect(() => {
+          BackHandler.addEventListener("hardwareBackPress",() => {
+               navigation.goBack()
+          })
+          return () => {
+               BackHandler.removeEventListener("hardwareBackPress",() => {
+
+               })
+          }
+     }, []);
+
      return (
           <Box width="100%" height="100%" display="flex"  alignItems="center" p={4} justifyContent="space-between">
                <VStack width="100%" alignItems="center">
