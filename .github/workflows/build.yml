@@ -1,8 +1,7 @@
 name: Glacier Chat React Native Android Build
 on:
   push:
-    branches:
-      - master
+    branches: [ main ]
 jobs:
   install-and-test:
     runs-on: ubuntu-latest
