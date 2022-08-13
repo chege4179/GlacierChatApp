@@ -70,16 +70,16 @@ const ChatScreen = ({ route }) => {
           if (status) {
                const chatId = await getChatId(currentUser.email, user.email, docId);
                firestore()
-               .collection("Users")
-               .doc(docId)
-               .collection("Chats")
-               .doc(chatId)
-               .collection("messages")
-               .onSnapshot((snapshot) => {
-                    const messages = snapshot.docs.map((doc) => ({ _id: doc.id, ...JSON.parse(doc.data().message) }));
+                    .collection("Users")
+                    .doc(docId)
+                    .collection("Chats")
+                    .doc(chatId)
+                    .collection("messages")
+                    .onSnapshot((snapshot) => {
+                         const messages = snapshot.docs.map((doc) => ({ _id: doc.id, ...JSON.parse(doc.data().message) }));
 
-                    setMessages(messages.sort((a, b) => b.time - a.time));
-               });
+                         setMessages(messages.sort((a, b) => b.time - a.time));
+                    });
           }
      }
 

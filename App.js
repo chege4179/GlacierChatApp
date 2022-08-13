@@ -38,7 +38,7 @@ const App = () => {
                     800: "#005885",
                     900: "#6366F1",
                },
-               // Redefinig only one shade, rest of the color will remain same.
+               // Redefining only one shade, rest of the color will remain same.
                amber: {
                     400: "#d97706",
                },
