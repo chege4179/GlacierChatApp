@@ -9,9 +9,7 @@ on:
 jobs:
   setup-node:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check Out
       - uses: actions/checkout@v2
       - name: Use Node.js 18
         uses: actions/setup-node@v2
