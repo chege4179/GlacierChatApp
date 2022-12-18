@@ -27,7 +27,8 @@ jobs:
           java-version: 11
 
       - name: Build with Gradle
-        run: cd android && ./gradlew build
+        run: |
+          cd android && ./gradlew build
 
 
       - name: Upload a Build Artifact (APK)
