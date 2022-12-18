@@ -15,14 +15,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18.x
-        run: npm install
+      - run: npm install
 
   gradle:
     needs: node
     runs-on: ubuntu-latest
     steps:
-      - name: Set up JDK
+
       - uses: actions/setup-java@v1
+
         with:
           java-version: 11
       - name: Build with Gradle
@@ -37,10 +38,10 @@ jobs:
 
       - name: Build Android Release
         run: |
-            cd android && ./gradlew assembleRelease
+          cd android && ./gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
-            name: app-release.apk
-            path: android/app/build/outputs/apk/release/
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
 
