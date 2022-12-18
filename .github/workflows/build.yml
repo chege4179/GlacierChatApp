@@ -21,7 +21,8 @@ jobs:
     needs: node
     runs-on: ubuntu-latest
     steps:
-
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
       - uses: actions/setup-java@v1
 
         with:
