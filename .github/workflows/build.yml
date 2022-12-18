@@ -16,12 +16,6 @@ jobs:
         with:
           node-version: 18.x
       - run: npm install
-
-  gradle:
-    needs: node
-    runs-on: ubuntu-latest
-    steps:
-
       - uses: actions/setup-java@v1
         with:
           java-version: 11
@@ -45,4 +39,6 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
+
+
 
