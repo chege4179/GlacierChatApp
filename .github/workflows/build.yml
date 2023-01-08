@@ -22,7 +22,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          cd android && ./gradlew build
+          cd android && ./gradlew assembleDebug
 
 
       - name: Upload a Build Artifact (APK)
