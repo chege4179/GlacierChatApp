@@ -13,15 +13,22 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Screens from "./src/util/Screens";
 import LoginScreen from "./src/screens/LoginScreen";
-import DashBoardScreen from "./src/screens/DashBoardScreen";
 import auth from "@react-native-firebase/auth";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import SearchScreen from "./src/screens/SearchScreen";
 import ChatScreen from "./src/screens/ChatScreen";
 import AllChatsScreen from "./src/screens/AllChatsScreen";
 
+type RootStackParamList = {
+     LOGIN_SCREEN: undefined;
+     ALL_CHATS_SCREEN:undefined,
+     PROFILE_SCREEN:undefined,
+     SEARCH_SCREEN:undefined,
+     CHAT_SCREEN: { id: string };
+};
+
 const Stack = createNativeStackNavigator();
-const App :React.FC = () => {
+const App: React.FC = () => {
      const currentUser = auth().currentUser;
      const theme = extendTheme({
           colors: {
@@ -36,24 +43,23 @@ const App :React.FC = () => {
                     600: "#007AB8",
                     700: "#006BA1",
                     800: "#005885",
-                    900: "#6366F1",
+                    900: "#6366F1"
                },
                // Redefining only one shade, rest of the color will remain same.
                amber: {
-                    400: "#d97706",
-               },
+                    400: "#d97706"
+               }
           },
           config: {
                // Changing initialColorMode to 'dark'
-               initialColorMode: "dark",
-          },
+               initialColorMode: "dark"
+          }
      });
 
      useEffect(() => {
           let isSubscribed = true;
           auth().onAuthStateChanged((user) => {
                if (isSubscribed) {
-
 
                }
           });
@@ -64,24 +70,42 @@ const App :React.FC = () => {
      return (
           <NavigationContainer>
                <NativeBaseProvider theme={theme}>
-                    <Stack.Navigator
-                         initialRouteName={currentUser === null ? Screens.LOGIN_SCREEN : Screens.DASHBOARD_SCREEN}>
-                         <Stack.Screen name={Screens.LOGIN_SCREEN} component={LoginScreen} options={{
-                              headerShown: false,
-                         }} />
-                         <Stack.Screen name={Screens.DASHBOARD_SCREEN} component={DashBoardScreen} options={{
-                              headerShown: false,
-                         }} />
-                         <Stack.Screen name={Screens.PROFILE_SCREEN} component={ProfileScreen} options={{
-                              headerShown: false,
-                         }} />
-                         <Stack.Screen name={Screens.SEARCH_SCREEN} component={SearchScreen} options={{
-                              headerShown: false,
-                         }} />
-                         <Stack.Screen name={Screens.CHAT_SCREEN} component={ChatScreen} />
-                         <Stack.Screen name={Screens.ALL_CHATS_SCREEN} component={AllChatsScreen} options={{
-                              headerShown: false,
-                         }} />
+                    <Stack.Navigator>
+                         {
+                              currentUser === null ? (
+                                   <Stack.Screen
+                                        name={Screens.LOGIN_SCREEN}
+                                        component={LoginScreen}
+                                        options={{
+                                             headerShown: false
+                                        }}
+                                   />
+                              ):(
+                                   <>
+                                        <Stack.Screen
+                                             name={Screens.ALL_CHATS_SCREEN}
+                                             component={AllChatsScreen}
+                                        />
+                                        <Stack.Screen
+                                             name={Screens.PROFILE_SCREEN}
+                                             component={ProfileScreen}
+                                             options={{
+                                             headerShown: false
+                                        }} />
+                                        <Stack.Screen
+                                             name={Screens.SEARCH_SCREEN}
+                                             component={SearchScreen}
+                                             options={{
+                                             headerShown: false
+                                        }} />
+                                        <Stack.Screen
+                                             name={Screens.CHAT_SCREEN}
+                                             component={ChatScreen}
+                                        />
+
+                                   </>
+                              )
+                         }
                     </Stack.Navigator>
                </NativeBaseProvider>
           </NavigationContainer>

@@ -57,7 +57,7 @@ const LoginScreen = () => {
                          size={GoogleSigninButton.Size.Wide}
                          color={GoogleSigninButton.Color.Dark}
                          onPress={() => onGoogleButtonPress()
-                         .then(() => navigation.navigate(Screens.DASHBOARD_SCREEN))
+                         .then(() => navigation.navigate(Screens.ALL_CHATS_SCREEN))
                          .catch((err) => console.log("Try error", err))}
                          disabled={false}
                     />

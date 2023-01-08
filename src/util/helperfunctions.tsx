@@ -1,5 +1,6 @@
 import firestore from "@react-native-firebase/firestore";
 import User from "../types/User";
+import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 
 async function getDocId(email:string){
@@ -126,8 +127,23 @@ async function getLastMessage(loggedInUser,receiver){
 function truncate(str:string, n:number) {
      return str?.length > n ? str.substr(0, n - 1) + "...." : str;
 }
+
+function addUserToDatabase(user:FirebaseAuthTypes.User) {
+     firestore()
+          .collection("Users")
+          .add({
+               displayName: user.displayName,
+               email: user.email,
+               userId: user.uid,
+               photoURL: user.photoURL,
+          })
+          .then(() => {
+               console.log("User added!");
+          });
+}
 export { getDocId,checkIfChatsExists,createNewChat,
      sendMessageToExistingChat,getChats,getChatId ,
-     getUserInfo,truncate,getLastMessage
+     getUserInfo,truncate,getLastMessage,
+     addUserToDatabase
 
 }

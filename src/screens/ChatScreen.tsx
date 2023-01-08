@@ -22,7 +22,7 @@ const ChatScreen: React.FC = () => {
      const route = useRoute()
      const navigation = useNavigation();
      const currentUser = auth().currentUser;
-     const { user } = route.params;
+     const { user } = route.params ;
      const [messages, setMessages] = useState();
      const { isOpen, onOpen, onClose } = useDisclose();
 
@@ -53,16 +53,6 @@ const ChatScreen: React.FC = () => {
                     );
                },
           });
-     }, []);
-     useEffect(() => {
-          BackHandler.addEventListener("hardwareBackPress",() => {
-               navigation.goBack()
-          })
-          return () => {
-               BackHandler.removeEventListener("hardwareBackPress",() => {
-
-               })
-          }
      }, []);
 
      async function getChats() {
