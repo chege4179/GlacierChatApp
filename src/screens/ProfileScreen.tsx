@@ -8,7 +8,7 @@ import { BackHandler } from "react-native";
 
 const ProfileScreen = () => {
      const navigation = useNavigation()
-     const currentUser = auth().currentUser
+     const currentUser  = auth().currentUser
      const LogOut = () => {
           GoogleSignin.signOut().then(() => {
                auth()

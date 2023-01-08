@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { BackHandler, TouchableOpacity } from "react-native";
 import { Actionsheet, Alert, Avatar, Box, HStack, KeyboardAvoidingView, Slide, Text, useDisclose } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 import { GiftedChat } from "react-native-gifted-chat";
@@ -18,9 +18,10 @@ import {
 import NetInfo from "@react-native-community/netinfo";
 import Screens from "../util/Screens";
 
-const ChatScreen = ({ route }) => {
-     const currentUser = auth().currentUser;
+const ChatScreen: React.FC = () => {
+     const route = useRoute()
      const navigation = useNavigation();
+     const currentUser = auth().currentUser;
      const { user } = route.params;
      const [messages, setMessages] = useState();
      const { isOpen, onOpen, onClose } = useDisclose();

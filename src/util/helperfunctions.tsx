@@ -1,7 +1,8 @@
 import firestore from "@react-native-firebase/firestore";
+import User from "../types/User";
 
 
-async function getDocId(email){
+async function getDocId(email:string){
      try {
           const users = await firestore().collection("Users").get()
           const usersss = users.docs.map((doc) => ({ id:doc.id,...doc.data() }))
@@ -11,16 +12,16 @@ async function getDocId(email){
      }
 
 }
-async function getUserInfo(email){
+async function getUserInfo(email:string){
      try {
           const userDocs = await firestore().collection("Users").get()
-          const users = userDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
+          const users:User[] = userDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
           return users.find((user) => user.email === email)
      }catch (e){
           console.log(e);
      }
 }
-async function getChatId(sender,receiver,docId){
+async function getChatId(sender:string,receiver:string,docId:string){
      try {
           const chatsDocs = await firestore().collection("Users").doc(docId).collection("Chats").get()
           const chats = chatsDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
@@ -31,7 +32,7 @@ async function getChatId(sender,receiver,docId){
      }
 
 }
-async function checkIfChatsExists(sender,receiver,docId){
+async function checkIfChatsExists(sender:string,receiver:string,docId:string){
      try {
           const chatsDocs = await firestore().collection("Users").doc(docId).collection("Chats").get()
           const chats = chatsDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
@@ -42,7 +43,7 @@ async function checkIfChatsExists(sender,receiver,docId){
      }
 
 }
-async function getChats(docId,chatId){
+async function getChats(docId:string,chatId:string){
      try {
           const chatsDocs = await firestore().collection("Users").doc(docId).collection("Chats").doc(chatId).collection("messages")
           const chats = chatsDocs.docs.map((doc) => ({ id:doc.id,...doc.data() }))
@@ -53,7 +54,7 @@ async function getChats(docId,chatId){
 
 }
 
-async function createNewChat(sender,receiver,message,docId){
+async function createNewChat(sender:string,receiver:string,message:string,docId:string){
      try {
           await firestore()
           .collection("Users")
@@ -85,7 +86,7 @@ async function createNewChat(sender,receiver,message,docId){
      }
 
 }
-async function sendMessageToExistingChat(sender,receiver,message,docId,chatId){
+async function sendMessageToExistingChat(sender:string,receiver:string,message:string,docId:string,chatId:string){
      try {
           await firestore()
           .collection("Users")
@@ -109,8 +110,8 @@ async function sendMessageToExistingChat(sender,receiver,message,docId,chatId){
 }
 async function getLastMessage(loggedInUser,receiver){
      try {
-          const docId = await getDocId(loggedInUser)
-          const chatId = await getChatId(loggedInUser,receiver,docId)
+          const docId:string = await getDocId(loggedInUser)
+          const chatId :string = await getChatId(loggedInUser,receiver,docId)
           const chatsDocs = await firestore().collection("Users").doc(docId).collection("Chats").doc(chatId).collection("messages").get()
           const unorderedchats = chatsDocs.docs.map((doc) => ({ _id: doc.id, ...JSON.parse(doc.data().message) }))
           const orderChats = unorderedchats.sort((a, b) => a.time - b.time)
@@ -122,7 +123,7 @@ async function getLastMessage(loggedInUser,receiver){
 
 
 }
-function truncate(str, n) {
+function truncate(str:string, n:number) {
      return str?.length > n ? str.substr(0, n - 1) + "...." : str;
 }
 export { getDocId,checkIfChatsExists,createNewChat,

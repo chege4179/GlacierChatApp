@@ -3,10 +3,11 @@ import { Box, Input,  VStack,FlatList } from "native-base";
 import firestore from "@react-native-firebase/firestore";
 import UserSearchCard from "../components/UserSearchCard";
 import auth from "@react-native-firebase/auth";
+import User from "../types/User";
 
 const SearchScreen = () => {
-     const [users, setUsers] = useState([]);
-     const [searchresults, setSearchResults] = useState([]);
+     const [users, setUsers] = useState<User[]>([]);
+     const [searchresults, setSearchResults] = useState<User[]>([]);
      const user = auth().currentUser
      useEffect(() => {
           let isSubscribed = true
@@ -15,7 +16,7 @@ const SearchScreen = () => {
                .collection("Users")
                .get()
                .then((snapshot) => {
-                    const users = snapshot.docs.map((doc) => (doc.data()));
+                    const users:User[] = snapshot.docs.map((doc) => (doc.data()));
                     setUsers(users);
                });
           }
@@ -23,7 +24,7 @@ const SearchScreen = () => {
                isSubscribed = false
           }
      }, []);
-     const SearchUser = (text) => {
+     const SearchUser = (text:string) => {
           setSearchResults(users.filter((user) => user.displayName.toLowerCase().includes(text.toLowerCase())))
           if (text ===""){
                setSearchResults([])

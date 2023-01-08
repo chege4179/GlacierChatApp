@@ -13,9 +13,7 @@ import NetInfo from "@react-native-community/netinfo";
 const DashBoardScreen = () => {
      const navigation = useNavigation()
      const user = auth().currentUser
-
-
-
+     const [isConnected,setIsConnected] = useState<boolean>(false)
      useLayoutEffect(() => {
           navigation.setOptions({
                headerShown:false,
@@ -24,7 +22,7 @@ const DashBoardScreen = () => {
 
      useEffect(() => {
           let isSubscribed = true
-          const subscriber = auth().onAuthStateChanged((user) => {
+          const subscriber = auth().onAuthStateChanged((user:FirebaseAuthTypes.User) => {
                if (isSubscribed){
                     firestore()
                     .collection("Users")
@@ -45,7 +43,7 @@ const DashBoardScreen = () => {
           }
      }, []);
 
-     const [IsConnected,setIsConnected] = useState(false)
+
 
      useEffect(() => {
           NetInfo.addEventListener(state => {
@@ -80,11 +78,11 @@ const DashBoardScreen = () => {
      }
      return (
           <Box width="100%" height="100%" display="flex" justifyContent="center" alignItems="center">
-               <Slide in={!IsConnected} placement="top">
+               <Slide in={!isConnected} placement="top">
                     <Alert justifyContent="center" status="error">
                          <Alert.Icon />
                          <Text color="error.600" fontWeight="medium">
-                              {IsConnected ? "Internet Connection found" : "No Internet Connection"}
+                              {isConnected ? "Internet Connection found" : "No Internet Connection"}
                          </Text>
                     </Alert>
                </Slide>

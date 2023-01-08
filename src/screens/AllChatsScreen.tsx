@@ -7,7 +7,7 @@ import ChatRoomCard from "../components/ChatRoomCard";
 import NetInfo from "@react-native-community/netinfo"
 import { useNavigation } from "@react-navigation/native";
 
-const AllChatsScreen = () => {
+const AllChatsScreen: React.FC = () => {
      const navigation  = useNavigation()
      const currentUser = auth().currentUser
      const [receiverEmails,setReceiverEmails] = useState([])

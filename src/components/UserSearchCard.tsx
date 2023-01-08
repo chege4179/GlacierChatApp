@@ -5,14 +5,18 @@ import { Avatar, Box, HStack, Text, VStack } from "native-base";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Screens from "../util/Screens";
+import User from "../types/User";
 
-const UserSearchCard = ({ user }) => {
+type UserSearchCardProps = {
+     user:User
+}
+const UserSearchCard:React.FC = ({ user }:UserSearchCardProps) => {
      const navigation = useNavigation()
-     const GoToChatScreen = () => {
+     const goToChatScreen = () => {
           navigation.navigate(Screens.CHAT_SCREEN,{ user })
      }
      return (
-          <TouchableOpacity onPress={GoToChatScreen}>
+          <TouchableOpacity onPress={goToChatScreen}>
                <Box
                     width="100%"
                     height={16}

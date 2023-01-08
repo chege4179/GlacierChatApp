@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { extendTheme } from "native-base";
 import { NativeBaseProvider } from "native-base/src/core/NativeBaseProvider";
 import { NavigationContainer } from "@react-navigation/native";
@@ -21,7 +21,7 @@ import ChatScreen from "./src/screens/ChatScreen";
 import AllChatsScreen from "./src/screens/AllChatsScreen";
 
 const Stack = createNativeStackNavigator();
-const App = () => {
+const App :React.FC = () => {
      const currentUser = auth().currentUser;
      const theme = extendTheme({
           colors: {
